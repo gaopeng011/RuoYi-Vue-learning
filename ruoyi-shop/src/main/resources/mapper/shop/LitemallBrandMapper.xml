@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.project.shop.mapper.LitemallBrandMapper">
+
+    <resultMap type="LitemallBrand" id="LitemallBrandResult">
+        <result property="id"    column="id"    />
+        <result property="name"    column="name"    />
+        <result property="desc"    column="desc1"    />
+        <result property="picUrl"    column="pic_url"    />
+        <result property="sortOrder"    column="sort_order"    />
+        <result property="floorPrice"    column="floor_price"    />
+        <result property="addTime"    column="add_time"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="deleted"    column="deleted"    />
+    </resultMap>
+
+    <sql id="selectLitemallBrandVo">
+        select id, name, desc1, pic_url, sort_order, floor_price, add_time, update_time, deleted from litemall_brand
+    </sql>
+
+    <select id="selectLitemallBrandList" parameterType="LitemallBrand" resultMap="LitemallBrandResult">
+        <include refid="selectLitemallBrandVo"/>
+        <where>
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="desc != null  and desc != ''"> and desc1 = #{desc}</if>
+            <if test="picUrl != null  and picUrl != ''"> and pic_url = #{picUrl}</if>
+            <if test="sortOrder != null "> and sort_order = #{sortOrder}</if>
+            <if test="floorPrice != null "> and floor_price = #{floorPrice}</if>
+            <if test="addTime != null "> and add_time = #{addTime}</if>
+            <if test="deleted != null "> and deleted = #{deleted}</if>
+        </where>
+    </select>
+
+    <select id="selectLitemallBrandById" parameterType="Long" resultMap="LitemallBrandResult">
+        <include refid="selectLitemallBrandVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertLitemallBrand" parameterType="LitemallBrand" useGeneratedKeys="true" keyProperty="id">
+        insert into litemall_brand
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="name != null  and name != ''">name,</if>
+            <if test="desc != null  and desc != ''">desc1,</if>
+            <if test="picUrl != null  and picUrl != ''">pic_url,</if>
+            <if test="sortOrder != null ">sort_order,</if>
+            <if test="floorPrice != null ">floor_price,</if>
+            <if test="addTime != null ">add_time,</if>
+            <if test="updateTime != null ">update_time,</if>
+            <if test="deleted != null ">deleted,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="name != null  and name != ''">#{name},</if>
+            <if test="desc != null  and desc != ''">#{desc},</if>
+            <if test="picUrl != null  and picUrl != ''">#{picUrl},</if>
+            <if test="sortOrder != null ">#{sortOrder},</if>
+            <if test="floorPrice != null ">#{floorPrice},</if>
+            <if test="addTime != null ">#{addTime},</if>
+            <if test="updateTime != null ">#{updateTime},</if>
+            <if test="deleted != null ">#{deleted},</if>
+         </trim>
+    </insert>
+
+    <update id="updateLitemallBrand" parameterType="LitemallBrand">
+        update litemall_brand
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="name != null  and name != ''">name = #{name},</if>
+            <if test="desc != null  and desc != ''">desc1 = #{desc},</if>
+            <if test="picUrl != null  and picUrl != ''">pic_url = #{picUrl},</if>
+            <if test="sortOrder != null ">sort_order = #{sortOrder},</if>
+            <if test="floorPrice != null ">floor_price = #{floorPrice},</if>
+            <if test="addTime != null ">add_time = #{addTime},</if>
+            <if test="updateTime != null ">update_time = #{updateTime},</if>
+            <if test="deleted != null ">deleted = #{deleted},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteLitemallBrandById" parameterType="Long">
+        update litemall_brand set deleted=1 where id = #{id}
+    </delete>
+
+    <delete id="deleteLitemallBrandByIds" parameterType="String">
+        delete from litemall_brand where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

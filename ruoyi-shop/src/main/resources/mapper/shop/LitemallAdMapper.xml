@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.project.shop.mapper.LitemallAdMapper">
+    
+    <resultMap type="LitemallAd" id="LitemallAdResult">
+        <result property="id"    column="id"    />
+        <result property="name"    column="name"    />
+        <result property="link"    column="link"    />
+        <result property="url"    column="url"    />
+        <result property="position"    column="position"    />
+        <result property="content"    column="content"    />
+        <result property="startTime"    column="start_time"    />
+        <result property="endTime"    column="end_time"    />
+        <result property="enabled"    column="enabled"    />
+        <result property="addTime"    column="add_time"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="deleted"    column="deleted"    />
+    </resultMap>
+
+    <sql id="selectLitemallAdVo">
+        select id, name, link, url, position, content, start_time, end_time, enabled, add_time, update_time, deleted from litemall_ad
+    </sql>
+
+    <select id="selectLitemallAdList" parameterType="LitemallAd" resultMap="LitemallAdResult">
+        <include refid="selectLitemallAdVo"/>
+        <where>  
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="link != null  and link != ''"> and link = #{link}</if>
+            <if test="url != null  and url != ''"> and url = #{url}</if>
+            <if test="position != null "> and position = #{position}</if>
+            <if test="content != null  and content != ''"> and content = #{content}</if>
+            <if test="startTime != null "> and start_time = #{startTime}</if>
+            <if test="endTime != null "> and end_time = #{endTime}</if>
+            <if test="enabled != null "> and enabled = #{enabled}</if>
+            <if test="addTime != null "> and add_time = #{addTime}</if>
+            <if test="deleted != null "> and deleted = #{deleted}</if>
+        </where>
+    </select>
+    
+    <select id="selectLitemallAdById" parameterType="Long" resultMap="LitemallAdResult">
+        <include refid="selectLitemallAdVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertLitemallAd" parameterType="LitemallAd" useGeneratedKeys="true" keyProperty="id">
+        insert into litemall_ad
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="name != null  and name != ''">name,</if>
+            <if test="link != null  and link != ''">link,</if>
+            <if test="url != null  and url != ''">url,</if>
+            <if test="position != null ">position,</if>
+            <if test="content != null  and content != ''">content,</if>
+            <if test="startTime != null ">start_time,</if>
+            <if test="endTime != null ">end_time,</if>
+            <if test="enabled != null ">enabled,</if>
+            <if test="addTime != null ">add_time,</if>
+            <if test="updateTime != null ">update_time,</if>
+            <if test="deleted != null ">deleted,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="name != null  and name != ''">#{name},</if>
+            <if test="link != null  and link != ''">#{link},</if>
+            <if test="url != null  and url != ''">#{url},</if>
+            <if test="position != null ">#{position},</if>
+            <if test="content != null  and content != ''">#{content},</if>
+            <if test="startTime != null ">#{startTime},</if>
+            <if test="endTime != null ">#{endTime},</if>
+            <if test="enabled != null ">#{enabled},</if>
+            <if test="addTime != null ">#{addTime},</if>
+            <if test="updateTime != null ">#{updateTime},</if>
+            <if test="deleted != null ">#{deleted},</if>
+         </trim>
+    </insert>
+
+    <update id="updateLitemallAd" parameterType="LitemallAd">
+        update litemall_ad
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="name != null  and name != ''">name = #{name},</if>
+            <if test="link != null  and link != ''">link = #{link},</if>
+            <if test="url != null  and url != ''">url = #{url},</if>
+            <if test="position != null ">position = #{position},</if>
+            <if test="content != null  and content != ''">content = #{content},</if>
+            <if test="startTime != null ">start_time = #{startTime},</if>
+            <if test="endTime != null ">end_time = #{endTime},</if>
+            <if test="enabled != null ">enabled = #{enabled},</if>
+            <if test="addTime != null ">add_time = #{addTime},</if>
+            <if test="updateTime != null ">update_time = #{updateTime},</if>
+            <if test="deleted != null ">deleted = #{deleted},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteLitemallAdById" parameterType="Long">
+        delete from litemall_ad where id = #{id}
+    </delete>
+
+    <delete id="deleteLitemallAdByIds" parameterType="String">
+        delete from litemall_ad where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+</mapper>

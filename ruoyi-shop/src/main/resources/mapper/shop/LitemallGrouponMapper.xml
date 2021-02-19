@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.project.shop.mapper.LitemallGrouponMapper">
+    
+    <resultMap type="LitemallGroupon" id="LitemallGrouponResult">
+        <result property="id"    column="id"    />
+        <result property="orderId"    column="order_id"    />
+        <result property="grouponId"    column="groupon_id"    />
+        <result property="rulesId"    column="rules_id"    />
+        <result property="userId"    column="user_id"    />
+        <result property="shareUrl"    column="share_url"    />
+        <result property="creatorUserId"    column="creator_user_id"    />
+        <result property="creatorUserTime"    column="creator_user_time"    />
+        <result property="status"    column="status"    />
+        <result property="addTime"    column="add_time"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="deleted"    column="deleted"    />
+    </resultMap>
+
+    <sql id="selectLitemallGrouponVo">
+        select id, order_id, groupon_id, rules_id, user_id, share_url, creator_user_id, creator_user_time, status, add_time, update_time, deleted from litemall_groupon
+    </sql>
+
+    <select id="selectLitemallGrouponList" parameterType="LitemallGroupon" resultMap="LitemallGrouponResult">
+        <include refid="selectLitemallGrouponVo"/>
+        <where>  
+            <if test="orderId != null "> and order_id = #{orderId}</if>
+            <if test="grouponId != null "> and groupon_id = #{grouponId}</if>
+            <if test="rulesId != null "> and rules_id = #{rulesId}</if>
+            <if test="userId != null "> and user_id = #{userId}</if>
+            <if test="shareUrl != null  and shareUrl != ''"> and share_url = #{shareUrl}</if>
+            <if test="creatorUserId != null "> and creator_user_id = #{creatorUserId}</if>
+            <if test="creatorUserTime != null "> and creator_user_time = #{creatorUserTime}</if>
+            <if test="status != null "> and status = #{status}</if>
+            <if test="addTime != null "> and add_time = #{addTime}</if>
+            <if test="deleted != null "> and deleted = #{deleted}</if>
+        </where>
+    </select>
+    
+    <select id="selectLitemallGrouponById" parameterType="Long" resultMap="LitemallGrouponResult">
+        <include refid="selectLitemallGrouponVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertLitemallGroupon" parameterType="LitemallGroupon" useGeneratedKeys="true" keyProperty="id">
+        insert into litemall_groupon
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="orderId != null ">order_id,</if>
+            <if test="grouponId != null ">groupon_id,</if>
+            <if test="rulesId != null ">rules_id,</if>
+            <if test="userId != null ">user_id,</if>
+            <if test="shareUrl != null  and shareUrl != ''">share_url,</if>
+            <if test="creatorUserId != null ">creator_user_id,</if>
+            <if test="creatorUserTime != null ">creator_user_time,</if>
+            <if test="status != null ">status,</if>
+            <if test="addTime != null ">add_time,</if>
+            <if test="updateTime != null ">update_time,</if>
+            <if test="deleted != null ">deleted,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="orderId != null ">#{orderId},</if>
+            <if test="grouponId != null ">#{grouponId},</if>
+            <if test="rulesId != null ">#{rulesId},</if>
+            <if test="userId != null ">#{userId},</if>
+            <if test="shareUrl != null  and shareUrl != ''">#{shareUrl},</if>
+            <if test="creatorUserId != null ">#{creatorUserId},</if>
+            <if test="creatorUserTime != null ">#{creatorUserTime},</if>
+            <if test="status != null ">#{status},</if>
+            <if test="addTime != null ">#{addTime},</if>
+            <if test="updateTime != null ">#{updateTime},</if>
+            <if test="deleted != null ">#{deleted},</if>
+         </trim>
+    </insert>
+
+    <update id="updateLitemallGroupon" parameterType="LitemallGroupon">
+        update litemall_groupon
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="orderId != null ">order_id = #{orderId},</if>
+            <if test="grouponId != null ">groupon_id = #{grouponId},</if>
+            <if test="rulesId != null ">rules_id = #{rulesId},</if>
+            <if test="userId != null ">user_id = #{userId},</if>
+            <if test="shareUrl != null  and shareUrl != ''">share_url = #{shareUrl},</if>
+            <if test="creatorUserId != null ">creator_user_id = #{creatorUserId},</if>
+            <if test="creatorUserTime != null ">creator_user_time = #{creatorUserTime},</if>
+            <if test="status != null ">status = #{status},</if>
+            <if test="addTime != null ">add_time = #{addTime},</if>
+            <if test="updateTime != null ">update_time = #{updateTime},</if>
+            <if test="deleted != null ">deleted = #{deleted},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteLitemallGrouponById" parameterType="Long">
+        delete from litemall_groupon where id = #{id}
+    </delete>
+
+    <delete id="deleteLitemallGrouponByIds" parameterType="String">
+        delete from litemall_groupon where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+</mapper>

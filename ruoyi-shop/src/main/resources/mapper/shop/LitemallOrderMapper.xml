@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.project.shop.mapper.LitemallOrderMapper">
+    
+    <resultMap type="LitemallOrder" id="LitemallOrderResult">
+        <result property="id"    column="id"    />
+        <result property="userId"    column="user_id"    />
+        <result property="orderSn"    column="order_sn"    />
+        <result property="orderStatus"    column="order_status"    />
+        <result property="consignee"    column="consignee"    />
+        <result property="mobile"    column="mobile"    />
+        <result property="address"    column="address"    />
+        <result property="message"    column="message"    />
+        <result property="goodsPrice"    column="goods_price"    />
+        <result property="freightPrice"    column="freight_price"    />
+        <result property="couponPrice"    column="coupon_price"    />
+        <result property="integralPrice"    column="integral_price"    />
+        <result property="grouponPrice"    column="groupon_price"    />
+        <result property="orderPrice"    column="order_price"    />
+        <result property="actualPrice"    column="actual_price"    />
+        <result property="payId"    column="pay_id"    />
+        <result property="payTime"    column="pay_time"    />
+        <result property="shipSn"    column="ship_sn"    />
+        <result property="shipChannel"    column="ship_channel"    />
+        <result property="shipTime"    column="ship_time"    />
+        <result property="refundAmount"    column="refund_amount"    />
+        <result property="refundType"    column="refund_type"    />
+        <result property="refundContent"    column="refund_content"    />
+        <result property="refundTime"    column="refund_time"    />
+        <result property="confirmTime"    column="confirm_time"    />
+        <result property="comments"    column="comments"    />
+        <result property="endTime"    column="end_time"    />
+        <result property="addTime"    column="add_time"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="deleted"    column="deleted"    />
+    </resultMap>
+
+    <sql id="selectLitemallOrderVo">
+        select id, user_id, order_sn, order_status, consignee, mobile, address, message, goods_price, freight_price, coupon_price, integral_price, groupon_price, order_price, actual_price, pay_id, pay_time, ship_sn, ship_channel, ship_time, refund_amount, refund_type, refund_content, refund_time, confirm_time, comments, end_time, add_time, update_time, deleted from litemall_order
+    </sql>
+
+    <select id="selectLitemallOrderList" parameterType="LitemallOrder" resultMap="LitemallOrderResult">
+        <include refid="selectLitemallOrderVo"/>
+        <where>  
+            <if test="userId != null "> and user_id = #{userId}</if>
+            <if test="orderSn != null  and orderSn != ''"> and order_sn = #{orderSn}</if>
+            <if test="orderStatus != null "> and order_status = #{orderStatus}</if>
+            <if test="consignee != null  and consignee != ''"> and consignee = #{consignee}</if>
+            <if test="mobile != null  and mobile != ''"> and mobile = #{mobile}</if>
+            <if test="address != null  and address != ''"> and address = #{address}</if>
+            <if test="message != null  and message != ''"> and message = #{message}</if>
+            <if test="goodsPrice != null "> and goods_price = #{goodsPrice}</if>
+            <if test="freightPrice != null "> and freight_price = #{freightPrice}</if>
+            <if test="couponPrice != null "> and coupon_price = #{couponPrice}</if>
+            <if test="integralPrice != null "> and integral_price = #{integralPrice}</if>
+            <if test="grouponPrice != null "> and groupon_price = #{grouponPrice}</if>
+            <if test="orderPrice != null "> and order_price = #{orderPrice}</if>
+            <if test="actualPrice != null "> and actual_price = #{actualPrice}</if>
+            <if test="payId != null  and payId != ''"> and pay_id = #{payId}</if>
+            <if test="payTime != null "> and pay_time = #{payTime}</if>
+            <if test="shipSn != null  and shipSn != ''"> and ship_sn = #{shipSn}</if>
+            <if test="shipChannel != null  and shipChannel != ''"> and ship_channel = #{shipChannel}</if>
+            <if test="shipTime != null "> and ship_time = #{shipTime}</if>
+            <if test="refundAmount != null "> and refund_amount = #{refundAmount}</if>
+            <if test="refundType != null  and refundType != ''"> and refund_type = #{refundType}</if>
+            <if test="refundContent != null  and refundContent != ''"> and refund_content = #{refundContent}</if>
+            <if test="refundTime != null "> and refund_time = #{refundTime}</if>
+            <if test="confirmTime != null "> and confirm_time = #{confirmTime}</if>
+            <if test="comments != null "> and comments = #{comments}</if>
+            <if test="endTime != null "> and end_time = #{endTime}</if>
+            <if test="addTime != null "> and add_time = #{addTime}</if>
+            <if test="deleted != null "> and deleted = #{deleted}</if>
+        </where>
+    </select>
+    
+    <select id="selectLitemallOrderById" parameterType="Long" resultMap="LitemallOrderResult">
+        <include refid="selectLitemallOrderVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertLitemallOrder" parameterType="LitemallOrder" useGeneratedKeys="true" keyProperty="id">
+        insert into litemall_order
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="userId != null ">user_id,</if>
+            <if test="orderSn != null  and orderSn != ''">order_sn,</if>
+            <if test="orderStatus != null ">order_status,</if>
+            <if test="consignee != null  and consignee != ''">consignee,</if>
+            <if test="mobile != null  and mobile != ''">mobile,</if>
+            <if test="address != null  and address != ''">address,</if>
+            <if test="message != null  and message != ''">message,</if>
+            <if test="goodsPrice != null ">goods_price,</if>
+            <if test="freightPrice != null ">freight_price,</if>
+            <if test="couponPrice != null ">coupon_price,</if>
+            <if test="integralPrice != null ">integral_price,</if>
+            <if test="grouponPrice != null ">groupon_price,</if>
+            <if test="orderPrice != null ">order_price,</if>
+            <if test="actualPrice != null ">actual_price,</if>
+            <if test="payId != null  and payId != ''">pay_id,</if>
+            <if test="payTime != null ">pay_time,</if>
+            <if test="shipSn != null  and shipSn != ''">ship_sn,</if>
+            <if test="shipChannel != null  and shipChannel != ''">ship_channel,</if>
+            <if test="shipTime != null ">ship_time,</if>
+            <if test="refundAmount != null ">refund_amount,</if>
+            <if test="refundType != null  and refundType != ''">refund_type,</if>
+            <if test="refundContent != null  and refundContent != ''">refund_content,</if>
+            <if test="refundTime != null ">refund_time,</if>
+            <if test="confirmTime != null ">confirm_time,</if>
+            <if test="comments != null ">comments,</if>
+            <if test="endTime != null ">end_time,</if>
+            <if test="addTime != null ">add_time,</if>
+            <if test="updateTime != null ">update_time,</if>
+            <if test="deleted != null ">deleted,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="userId != null ">#{userId},</if>
+            <if test="orderSn != null  and orderSn != ''">#{orderSn},</if>
+            <if test="orderStatus != null ">#{orderStatus},</if>
+            <if test="consignee != null  and consignee != ''">#{consignee},</if>
+            <if test="mobile != null  and mobile != ''">#{mobile},</if>
+            <if test="address != null  and address != ''">#{address},</if>
+            <if test="message != null  and message != ''">#{message},</if>
+            <if test="goodsPrice != null ">#{goodsPrice},</if>
+            <if test="freightPrice != null ">#{freightPrice},</if>
+            <if test="couponPrice != null ">#{couponPrice},</if>
+            <if test="integralPrice != null ">#{integralPrice},</if>
+            <if test="grouponPrice != null ">#{grouponPrice},</if>
+            <if test="orderPrice != null ">#{orderPrice},</if>
+            <if test="actualPrice != null ">#{actualPrice},</if>
+            <if test="payId != null  and payId != ''">#{payId},</if>
+            <if test="payTime != null ">#{payTime},</if>
+            <if test="shipSn != null  and shipSn != ''">#{shipSn},</if>
+            <if test="shipChannel != null  and shipChannel != ''">#{shipChannel},</if>
+            <if test="shipTime != null ">#{shipTime},</if>
+            <if test="refundAmount != null ">#{refundAmount},</if>
+            <if test="refundType != null  and refundType != ''">#{refundType},</if>
+            <if test="refundContent != null  and refundContent != ''">#{refundContent},</if>
+            <if test="refundTime != null ">#{refundTime},</if>
+            <if test="confirmTime != null ">#{confirmTime},</if>
+            <if test="comments != null ">#{comments},</if>
+            <if test="endTime != null ">#{endTime},</if>
+            <if test="addTime != null ">#{addTime},</if>
+            <if test="updateTime != null ">#{updateTime},</if>
+            <if test="deleted != null ">#{deleted},</if>
+         </trim>
+    </insert>
+
+    <update id="updateLitemallOrder" parameterType="LitemallOrder">
+        update litemall_order
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="userId != null ">user_id = #{userId},</if>
+            <if test="orderSn != null  and orderSn != ''">order_sn = #{orderSn},</if>
+            <if test="orderStatus != null ">order_status = #{orderStatus},</if>
+            <if test="consignee != null  and consignee != ''">consignee = #{consignee},</if>
+            <if test="mobile != null  and mobile != ''">mobile = #{mobile},</if>
+            <if test="address != null  and address != ''">address = #{address},</if>
+            <if test="message != null  and message != ''">message = #{message},</if>
+            <if test="goodsPrice != null ">goods_price = #{goodsPrice},</if>
+            <if test="freightPrice != null ">freight_price = #{freightPrice},</if>
+            <if test="couponPrice != null ">coupon_price = #{couponPrice},</if>
+            <if test="integralPrice != null ">integral_price = #{integralPrice},</if>
+            <if test="grouponPrice != null ">groupon_price = #{grouponPrice},</if>
+            <if test="orderPrice != null ">order_price = #{orderPrice},</if>
+            <if test="actualPrice != null ">actual_price = #{actualPrice},</if>
+            <if test="payId != null  and payId != ''">pay_id = #{payId},</if>
+            <if test="payTime != null ">pay_time = #{payTime},</if>
+            <if test="shipSn != null  and shipSn != ''">ship_sn = #{shipSn},</if>
+            <if test="shipChannel != null  and shipChannel != ''">ship_channel = #{shipChannel},</if>
+            <if test="shipTime != null ">ship_time = #{shipTime},</if>
+            <if test="refundAmount != null ">refund_amount = #{refundAmount},</if>
+            <if test="refundType != null  and refundType != ''">refund_type = #{refundType},</if>
+            <if test="refundContent != null  and refundContent != ''">refund_content = #{refundContent},</if>
+            <if test="refundTime != null ">refund_time = #{refundTime},</if>
+            <if test="confirmTime != null ">confirm_time = #{confirmTime},</if>
+            <if test="comments != null ">comments = #{comments},</if>
+            <if test="endTime != null ">end_time = #{endTime},</if>
+            <if test="addTime != null ">add_time = #{addTime},</if>
+            <if test="updateTime != null ">update_time = #{updateTime},</if>
+            <if test="deleted != null ">deleted = #{deleted},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteLitemallOrderById" parameterType="Long">
+        delete from litemall_order where id = #{id}
+    </delete>
+
+    <delete id="deleteLitemallOrderByIds" parameterType="String">
+        delete from litemall_order where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+</mapper>

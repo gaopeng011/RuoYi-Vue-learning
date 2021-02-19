@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.project.shop.mapper.LitemallTopicMapper">
+
+    <resultMap type="LitemallTopic" id="LitemallTopicResult">
+        <result property="id"    column="id"    />
+        <result property="title"    column="title"    />
+        <result property="subtitle"    column="subtitle"    />
+        <result property="content"    column="content"    />
+        <result property="price"    column="price"    />
+        <result property="readCount"    column="read_count"    />
+        <result property="picUrl"    column="pic_url"    />
+        <result property="sortOrder"    column="sort_order"    />
+        <result property="goods"    column="goods"   typeHandler="com.ruoyi.common.mybatis.JsonIntegerArrayTypeHandler" />
+        <result property="addTime"    column="add_time"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="deleted"    column="deleted"    />
+    </resultMap>
+
+    <sql id="selectLitemallTopicVo">
+        select id, title, subtitle, content, price, read_count, pic_url, sort_order, goods, add_time, update_time, deleted from litemall_topic
+    </sql>
+
+    <select id="selectLitemallTopicList" parameterType="LitemallTopic" resultMap="LitemallTopicResult">
+        <include refid="selectLitemallTopicVo"/>
+        <where>
+            <if test="title != null  and title != ''"> and title = #{title}</if>
+            <if test="subtitle != null  and subtitle != ''"> and subtitle = #{subtitle}</if>
+            <if test="content != null  and content != ''"> and content = #{content}</if>
+            <if test="price != null "> and price = #{price}</if>
+            <if test="readCount != null  and readCount != ''"> and read_count = #{readCount}</if>
+            <if test="picUrl != null  and picUrl != ''"> and pic_url = #{picUrl}</if>
+            <if test="sortOrder != null "> and sort_order = #{sortOrder}</if>
+            <if test="goods != null  and goods != ''"> and goods = #{goods}</if>
+            <if test="addTime != null "> and add_time = #{addTime}</if>
+            <if test="deleted != null "> and deleted = #{deleted}</if>
+        </where>
+    </select>
+
+    <select id="selectLitemallTopicById" parameterType="Long" resultMap="LitemallTopicResult">
+        <include refid="selectLitemallTopicVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertLitemallTopic" parameterType="LitemallTopic" useGeneratedKeys="true" keyProperty="id">
+        insert into litemall_topic
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="title != null  and title != ''">title,</if>
+            <if test="subtitle != null  and subtitle != ''">subtitle,</if>
+            <if test="content != null  and content != ''">content,</if>
+            <if test="price != null ">price,</if>
+            <if test="readCount != null  and readCount != ''">read_count,</if>
+            <if test="picUrl != null  and picUrl != ''">pic_url,</if>
+            <if test="sortOrder != null ">sort_order,</if>
+            <if test="goods != null">goods,</if>
+            <if test="addTime != null ">add_time,</if>
+            <if test="updateTime != null ">update_time,</if>
+            <if test="deleted != null ">deleted,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="title != null  and title != ''">#{title},</if>
+            <if test="subtitle != null  and subtitle != ''">#{subtitle},</if>
+            <if test="content != null  and content != ''">#{content},</if>
+            <if test="price != null ">#{price},</if>
+            <if test="readCount != null  and readCount != ''">#{readCount},</if>
+            <if test="picUrl != null  and picUrl != ''">#{picUrl},</if>
+            <if test="sortOrder != null ">#{sortOrder},</if>
+            <if test="goods != null">#{goods,jdbcType=VARCHAR,typeHandler=com.ruoyi.common.mybatis.JsonIntegerArrayTypeHandler},</if>
+            <if test="addTime != null ">#{addTime},</if>
+            <if test="updateTime != null ">#{updateTime},</if>
+            <if test="deleted != null ">#{deleted},</if>
+         </trim>
+    </insert>
+
+    <update id="updateLitemallTopic" parameterType="LitemallTopic">
+        update litemall_topic
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="title != null  and title != ''">title = #{title},</if>
+            <if test="subtitle != null  and subtitle != ''">subtitle = #{subtitle},</if>
+            <if test="content != null  and content != ''">content = #{content},</if>
+            <if test="price != null ">price = #{price},</if>
+            <if test="readCount != null  and readCount != ''">read_count = #{readCount},</if>
+            <if test="picUrl != null  and picUrl != ''">pic_url = #{picUrl},</if>
+            <if test="sortOrder != null ">sort_order = #{sortOrder},</if>
+            <if test="goods != null">goods = #{goods,jdbcType=VARCHAR,typeHandler=com.ruoyi.common.mybatis.JsonIntegerArrayTypeHandler},</if>
+            <if test="addTime != null ">add_time = #{addTime},</if>
+            <if test="updateTime != null ">update_time = #{updateTime},</if>
+            <if test="deleted != null ">deleted = #{deleted},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteLitemallTopicById" parameterType="Long">
+        delete from litemall_topic where id = #{id}
+    </delete>
+
+    <delete id="deleteLitemallTopicByIds" parameterType="String">
+        delete from litemall_topic where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

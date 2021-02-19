@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.project.shop.mapper.LitemallGoodsAttributeMapper">
+
+    <resultMap type="LitemallGoodsAttribute" id="LitemallGoodsAttributeResult">
+        <result property="id"    column="id"    />
+        <result property="goodsId"    column="goods_id"    />
+        <result property="attribute"    column="attribute"    />
+        <result property="value"    column="value"    />
+        <result property="addTime"    column="add_time"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="deleted"    column="deleted"    />
+    </resultMap>
+
+    <sql id="selectLitemallGoodsAttributeVo">
+        select id, goods_id, attribute, value, add_time, update_time, deleted from litemall_goods_attribute
+    </sql>
+
+    <select id="selectLitemallGoodsAttributeList" parameterType="LitemallGoodsAttribute" resultMap="LitemallGoodsAttributeResult">
+        <include refid="selectLitemallGoodsAttributeVo"/>
+        <where>
+            <if test="goodsId != null "> and goods_id = #{goodsId}</if>
+            <if test="attribute != null  and attribute != ''"> and attribute = #{attribute}</if>
+            <if test="value != null  and value != ''"> and value = #{value}</if>
+            <if test="addTime != null "> and add_time = #{addTime}</if>
+            <if test="deleted != null "> and deleted = #{deleted}</if>
+        </where>
+    </select>
+
+    <select id="selectLitemallGoodsAttributeById" parameterType="Long" resultMap="LitemallGoodsAttributeResult">
+        <include refid="selectLitemallGoodsAttributeVo"/>
+        where id = #{id}
+    </select>
+
+
+
+    <select id="queryByGid" parameterType="Long" resultMap="LitemallGoodsAttributeResult">
+        <include refid="selectLitemallGoodsAttributeVo"/>
+        where goods_id = #{goodsId}
+    </select>
+
+    <insert id="insertLitemallGoodsAttribute" parameterType="LitemallGoodsAttribute" useGeneratedKeys="true" keyProperty="id">
+        insert into litemall_goods_attribute
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="goodsId != null ">goods_id,</if>
+            <if test="attribute != null  and attribute != ''">attribute,</if>
+            <if test="value != null  and value != ''">value,</if>
+            <if test="addTime != null ">add_time,</if>
+            <if test="updateTime != null ">update_time,</if>
+            <if test="deleted != null ">deleted,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="goodsId != null ">#{goodsId},</if>
+            <if test="attribute != null  and attribute != ''">#{attribute},</if>
+            <if test="value != null  and value != ''">#{value},</if>
+            <if test="addTime != null ">#{addTime},</if>
+            <if test="updateTime != null ">#{updateTime},</if>
+            <if test="deleted != null ">#{deleted},</if>
+         </trim>
+    </insert>
+
+    <update id="updateLitemallGoodsAttribute" parameterType="LitemallGoodsAttribute">
+        update litemall_goods_attribute
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="goodsId != null ">goods_id = #{goodsId},</if>
+            <if test="attribute != null  and attribute != ''">attribute = #{attribute},</if>
+            <if test="value != null  and value != ''">value = #{value},</if>
+            <if test="addTime != null ">add_time = #{addTime},</if>
+            <if test="updateTime != null ">update_time = #{updateTime},</if>
+            <if test="deleted != null ">deleted = #{deleted},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteLitemallGoodsAttributeById" parameterType="Long">
+        delete from litemall_goods_attribute where goods_id = #{goodsId}
+    </delete>
+
+    <delete id="deleteLitemallGoodsAttributeByIds" parameterType="String">
+        delete from litemall_goods_attribute where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

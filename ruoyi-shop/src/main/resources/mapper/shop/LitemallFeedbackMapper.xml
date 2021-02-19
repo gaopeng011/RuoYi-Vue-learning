@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.project.shop.mapper.LitemallFeedbackMapper">
+    
+    <resultMap type="LitemallFeedback" id="LitemallFeedbackResult">
+        <result property="id"    column="id"    />
+        <result property="userId"    column="user_id"    />
+        <result property="username"    column="username"    />
+        <result property="mobile"    column="mobile"    />
+        <result property="feedType"    column="feed_type"    />
+        <result property="content"    column="content"    />
+        <result property="status"    column="status"    />
+        <result property="hasPicture"    column="has_picture"    />
+        <result property="picUrls"    column="pic_urls"    />
+        <result property="addTime"    column="add_time"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="deleted"    column="deleted"    />
+    </resultMap>
+
+    <sql id="selectLitemallFeedbackVo">
+        select id, user_id, username, mobile, feed_type, content, status, has_picture, pic_urls, add_time, update_time, deleted from litemall_feedback
+    </sql>
+
+    <select id="selectLitemallFeedbackList" parameterType="LitemallFeedback" resultMap="LitemallFeedbackResult">
+        <include refid="selectLitemallFeedbackVo"/>
+        <where>  
+            <if test="userId != null "> and user_id = #{userId}</if>
+            <if test="username != null  and username != ''"> and username like concat('%', #{username}, '%')</if>
+            <if test="mobile != null  and mobile != ''"> and mobile = #{mobile}</if>
+            <if test="feedType != null  and feedType != ''"> and feed_type = #{feedType}</if>
+            <if test="content != null  and content != ''"> and content = #{content}</if>
+            <if test="status != null "> and status = #{status}</if>
+            <if test="hasPicture != null "> and has_picture = #{hasPicture}</if>
+            <if test="picUrls != null  and picUrls != ''"> and pic_urls = #{picUrls}</if>
+            <if test="addTime != null "> and add_time = #{addTime}</if>
+            <if test="deleted != null "> and deleted = #{deleted}</if>
+        </where>
+    </select>
+    
+    <select id="selectLitemallFeedbackById" parameterType="Long" resultMap="LitemallFeedbackResult">
+        <include refid="selectLitemallFeedbackVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertLitemallFeedback" parameterType="LitemallFeedback" useGeneratedKeys="true" keyProperty="id">
+        insert into litemall_feedback
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="userId != null ">user_id,</if>
+            <if test="username != null  and username != ''">username,</if>
+            <if test="mobile != null  and mobile != ''">mobile,</if>
+            <if test="feedType != null  and feedType != ''">feed_type,</if>
+            <if test="content != null  and content != ''">content,</if>
+            <if test="status != null ">status,</if>
+            <if test="hasPicture != null ">has_picture,</if>
+            <if test="picUrls != null  and picUrls != ''">pic_urls,</if>
+            <if test="addTime != null ">add_time,</if>
+            <if test="updateTime != null ">update_time,</if>
+            <if test="deleted != null ">deleted,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="userId != null ">#{userId},</if>
+            <if test="username != null  and username != ''">#{username},</if>
+            <if test="mobile != null  and mobile != ''">#{mobile},</if>
+            <if test="feedType != null  and feedType != ''">#{feedType},</if>
+            <if test="content != null  and content != ''">#{content},</if>
+            <if test="status != null ">#{status},</if>
+            <if test="hasPicture != null ">#{hasPicture},</if>
+            <if test="picUrls != null  and picUrls != ''">#{picUrls},</if>
+            <if test="addTime != null ">#{addTime},</if>
+            <if test="updateTime != null ">#{updateTime},</if>
+            <if test="deleted != null ">#{deleted},</if>
+         </trim>
+    </insert>
+
+    <update id="updateLitemallFeedback" parameterType="LitemallFeedback">
+        update litemall_feedback
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="userId != null ">user_id = #{userId},</if>
+            <if test="username != null  and username != ''">username = #{username},</if>
+            <if test="mobile != null  and mobile != ''">mobile = #{mobile},</if>
+            <if test="feedType != null  and feedType != ''">feed_type = #{feedType},</if>
+            <if test="content != null  and content != ''">content = #{content},</if>
+            <if test="status != null ">status = #{status},</if>
+            <if test="hasPicture != null ">has_picture = #{hasPicture},</if>
+            <if test="picUrls != null  and picUrls != ''">pic_urls = #{picUrls},</if>
+            <if test="addTime != null ">add_time = #{addTime},</if>
+            <if test="updateTime != null ">update_time = #{updateTime},</if>
+            <if test="deleted != null ">deleted = #{deleted},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteLitemallFeedbackById" parameterType="Long">
+        delete from litemall_feedback where id = #{id}
+    </delete>
+
+    <delete id="deleteLitemallFeedbackByIds" parameterType="String">
+        delete from litemall_feedback where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+</mapper>

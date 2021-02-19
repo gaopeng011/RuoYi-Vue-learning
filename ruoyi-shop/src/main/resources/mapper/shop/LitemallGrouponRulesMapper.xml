@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.project.shop.mapper.LitemallGrouponRulesMapper">
+
+    <resultMap type="LitemallGrouponRules" id="LitemallGrouponRulesResult">
+        <result property="id"    column="id"    />
+        <result property="goodsId"    column="goods_id"    />
+        <result property="goodsName"    column="goods_name"    />
+        <result property="picUrl"    column="pic_url"    />
+        <result property="discount"    column="discount"    />
+        <result property="discountMember"    column="discount_member"    />
+        <result property="expireTime"    column="expire_time"    />
+        <result property="status"    column="status"    />
+        <result property="addTime"    column="add_time"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="deleted"    column="deleted"    />
+    </resultMap>
+
+    <sql id="selectLitemallGrouponRulesVo">
+        select id, goods_id, goods_name, pic_url, discount, discount_member, expire_time, status, add_time, update_time, deleted from litemall_groupon_rules
+    </sql>
+
+    <select id="selectLitemallGrouponRulesList" parameterType="LitemallGrouponRules" resultMap="LitemallGrouponRulesResult">
+        <include refid="selectLitemallGrouponRulesVo"/>
+        <where>
+            <if test="goodsId != null "> and goods_id = #{goodsId}</if>
+            <if test="goodsName != null  and goodsName != ''"> and goods_name like concat('%', #{goodsName}, '%')</if>
+            <if test="picUrl != null  and picUrl != ''"> and pic_url = #{picUrl}</if>
+            <if test="discount != null "> and discount = #{discount}</if>
+            <if test="discountMember != null "> and discount_member = #{discountMember}</if>
+            <if test="expireTime != null "> and expire_time = #{expireTime}</if>
+            <if test="status != null "> and status = #{status}</if>
+            <if test="addTime != null "> and add_time = #{addTime}</if>
+            <if test="deleted != null "> and deleted = #{deleted}</if>
+        </where>
+    </select>
+
+    <select id="selectLitemallGrouponRulesById" parameterType="Long" resultMap="LitemallGrouponRulesResult">
+        <include refid="selectLitemallGrouponRulesVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertLitemallGrouponRules" parameterType="LitemallGrouponRules" useGeneratedKeys="true" keyProperty="id">
+        <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into litemall_groupon_rules
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="goodsId != null ">goods_id,</if>
+            <if test="goodsName != null  and goodsName != ''">goods_name,</if>
+            <if test="picUrl != null  and picUrl != ''">pic_url,</if>
+            <if test="discount != null ">discount,</if>
+            <if test="discountMember != null ">discount_member,</if>
+            <if test="expireTime != null ">expire_time,</if>
+            <if test="status != null ">status,</if>
+            <if test="addTime != null ">add_time,</if>
+            <if test="updateTime != null ">update_time,</if>
+            <if test="deleted != null ">deleted,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="goodsId != null ">#{goodsId},</if>
+            <if test="goodsName != null  and goodsName != ''">#{goodsName},</if>
+            <if test="picUrl != null  and picUrl != ''">#{picUrl},</if>
+            <if test="discount != null ">#{discount},</if>
+            <if test="discountMember != null ">#{discountMember},</if>
+            <if test="expireTime != null ">#{expireTime},</if>
+            <if test="status != null ">#{status},</if>
+            <if test="addTime != null ">#{addTime},</if>
+            <if test="updateTime != null ">#{updateTime},</if>
+            <if test="deleted != null ">#{deleted},</if>
+         </trim>
+    </insert>
+
+    <update id="updateLitemallGrouponRules" parameterType="LitemallGrouponRules">
+        update litemall_groupon_rules
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="goodsId != null ">goods_id = #{goodsId},</if>
+            <if test="goodsName != null  and goodsName != ''">goods_name = #{goodsName},</if>
+            <if test="picUrl != null  and picUrl != ''">pic_url = #{picUrl},</if>
+            <if test="discount != null ">discount = #{discount},</if>
+            <if test="discountMember != null ">discount_member = #{discountMember},</if>
+            <if test="expireTime != null ">expire_time = #{expireTime},</if>
+            <if test="status != null ">status = #{status},</if>
+            <if test="addTime != null ">add_time = #{addTime},</if>
+            <if test="updateTime != null ">update_time = #{updateTime},</if>
+            <if test="deleted != null ">deleted = #{deleted},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteLitemallGrouponRulesById" parameterType="Long">
+        delete from litemall_groupon_rules where id = #{id}
+    </delete>
+
+    <delete id="deleteLitemallGrouponRulesByIds" parameterType="String">
+        delete from litemall_groupon_rules where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

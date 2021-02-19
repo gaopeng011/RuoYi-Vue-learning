@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.project.shop.mapper.LitemallKeywordMapper">
+    
+    <resultMap type="LitemallKeyword" id="LitemallKeywordResult">
+        <result property="id"    column="id"    />
+        <result property="keyword"    column="keyword"    />
+        <result property="url"    column="url"    />
+        <result property="isHot"    column="is_hot"    />
+        <result property="isDefault"    column="is_default"    />
+        <result property="sortOrder"    column="sort_order"    />
+        <result property="addTime"    column="add_time"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="deleted"    column="deleted"    />
+    </resultMap>
+
+    <sql id="selectLitemallKeywordVo">
+        select id, keyword, url, is_hot, is_default, sort_order, add_time, update_time, deleted from litemall_keyword
+    </sql>
+
+    <select id="selectLitemallKeywordList" parameterType="LitemallKeyword" resultMap="LitemallKeywordResult">
+        <include refid="selectLitemallKeywordVo"/>
+        <where>  
+            <if test="keyword != null  and keyword != ''"> and keyword = #{keyword}</if>
+            <if test="url != null  and url != ''"> and url = #{url}</if>
+            <if test="isHot != null "> and is_hot = #{isHot}</if>
+            <if test="isDefault != null "> and is_default = #{isDefault}</if>
+            <if test="sortOrder != null "> and sort_order = #{sortOrder}</if>
+            <if test="addTime != null "> and add_time = #{addTime}</if>
+            <if test="deleted != null "> and deleted = #{deleted}</if>
+        </where>
+    </select>
+    
+    <select id="selectLitemallKeywordById" parameterType="Long" resultMap="LitemallKeywordResult">
+        <include refid="selectLitemallKeywordVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertLitemallKeyword" parameterType="LitemallKeyword" useGeneratedKeys="true" keyProperty="id">
+        insert into litemall_keyword
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="keyword != null  and keyword != ''">keyword,</if>
+            <if test="url != null  and url != ''">url,</if>
+            <if test="isHot != null ">is_hot,</if>
+            <if test="isDefault != null ">is_default,</if>
+            <if test="sortOrder != null ">sort_order,</if>
+            <if test="addTime != null ">add_time,</if>
+            <if test="updateTime != null ">update_time,</if>
+            <if test="deleted != null ">deleted,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="keyword != null  and keyword != ''">#{keyword},</if>
+            <if test="url != null  and url != ''">#{url},</if>
+            <if test="isHot != null ">#{isHot},</if>
+            <if test="isDefault != null ">#{isDefault},</if>
+            <if test="sortOrder != null ">#{sortOrder},</if>
+            <if test="addTime != null ">#{addTime},</if>
+            <if test="updateTime != null ">#{updateTime},</if>
+            <if test="deleted != null ">#{deleted},</if>
+         </trim>
+    </insert>
+
+    <update id="updateLitemallKeyword" parameterType="LitemallKeyword">
+        update litemall_keyword
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="keyword != null  and keyword != ''">keyword = #{keyword},</if>
+            <if test="url != null  and url != ''">url = #{url},</if>
+            <if test="isHot != null ">is_hot = #{isHot},</if>
+            <if test="isDefault != null ">is_default = #{isDefault},</if>
+            <if test="sortOrder != null ">sort_order = #{sortOrder},</if>
+            <if test="addTime != null ">add_time = #{addTime},</if>
+            <if test="updateTime != null ">update_time = #{updateTime},</if>
+            <if test="deleted != null ">deleted = #{deleted},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteLitemallKeywordById" parameterType="Long">
+        delete from litemall_keyword where id = #{id}
+    </delete>
+
+    <delete id="deleteLitemallKeywordByIds" parameterType="String">
+        delete from litemall_keyword where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+</mapper>

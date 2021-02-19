@@ -208,6 +208,13 @@
                 <version>${ruoyi.version}</version>
             </dependency>
 
+            <!-- ruoyi-monitor-->
+            <dependency>
+                <groupId>com.ruoyi</groupId>
+                <artifactId>ruoyi-shop</artifactId>
+                <version>${ruoyi.version}</version>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
 
@@ -220,6 +227,7 @@
         <module>ruoyi-common</module>
         <module>ruoyi-monitor</module>
         <module>ruoyi-run</module>
+        <module>ruoyi-shop</module>
     </modules>
     <packaging>pom</packaging>
 

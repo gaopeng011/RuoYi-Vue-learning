@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.project.shop.mapper.LitemallIssueMapper">
+    
+    <resultMap type="LitemallIssue" id="LitemallIssueResult">
+        <result property="id"    column="id"    />
+        <result property="question"    column="question"    />
+        <result property="answer"    column="answer"    />
+        <result property="addTime"    column="add_time"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="deleted"    column="deleted"    />
+    </resultMap>
+
+    <sql id="selectLitemallIssueVo">
+        select id, question, answer, add_time, update_time, deleted from litemall_issue
+    </sql>
+
+    <select id="selectLitemallIssueList" parameterType="LitemallIssue" resultMap="LitemallIssueResult">
+        <include refid="selectLitemallIssueVo"/>
+        <where>  
+            <if test="question != null  and question != ''"> and question = #{question}</if>
+            <if test="answer != null  and answer != ''"> and answer = #{answer}</if>
+            <if test="addTime != null "> and add_time = #{addTime}</if>
+            <if test="deleted != null "> and deleted = #{deleted}</if>
+        </where>
+    </select>
+    
+    <select id="selectLitemallIssueById" parameterType="Long" resultMap="LitemallIssueResult">
+        <include refid="selectLitemallIssueVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertLitemallIssue" parameterType="LitemallIssue" useGeneratedKeys="true" keyProperty="id">
+        insert into litemall_issue
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="question != null  and question != ''">question,</if>
+            <if test="answer != null  and answer != ''">answer,</if>
+            <if test="addTime != null ">add_time,</if>
+            <if test="updateTime != null ">update_time,</if>
+            <if test="deleted != null ">deleted,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="question != null  and question != ''">#{question},</if>
+            <if test="answer != null  and answer != ''">#{answer},</if>
+            <if test="addTime != null ">#{addTime},</if>
+            <if test="updateTime != null ">#{updateTime},</if>
+            <if test="deleted != null ">#{deleted},</if>
+         </trim>
+    </insert>
+
+    <update id="updateLitemallIssue" parameterType="LitemallIssue">
+        update litemall_issue
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="question != null  and question != ''">question = #{question},</if>
+            <if test="answer != null  and answer != ''">answer = #{answer},</if>
+            <if test="addTime != null ">add_time = #{addTime},</if>
+            <if test="updateTime != null ">update_time = #{updateTime},</if>
+            <if test="deleted != null ">deleted = #{deleted},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteLitemallIssueById" parameterType="Long">
+        delete from litemall_issue where id = #{id}
+    </delete>
+
+    <delete id="deleteLitemallIssueByIds" parameterType="String">
+        delete from litemall_issue where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+</mapper>

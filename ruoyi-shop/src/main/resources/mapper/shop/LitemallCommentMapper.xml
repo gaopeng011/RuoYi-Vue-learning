@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.project.shop.mapper.LitemallCommentMapper">
+
+    <resultMap type="LitemallComment" id="LitemallCommentResult">
+        <result property="id"    column="id"    />
+        <result property="valueId"    column="value_id"    />
+        <result property="type"    column="type"    />
+        <result property="content"    column="content"    />
+        <result property="userId"    column="user_id"    />
+        <result property="hasPicture"    column="has_picture"    />
+        <result property="picUrls"    column="pic_urls"   typeHandler="com.ruoyi.common.mybatis.JsonStringArrayTypeHandler" />
+        <result property="star"    column="star"    />
+        <result property="addTime"    column="add_time"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="deleted"    column="deleted"    />
+    </resultMap>
+
+    <sql id="selectLitemallCommentVo">
+        select id, value_id, type, content, user_id, has_picture, pic_urls, star, add_time, update_time, deleted from litemall_comment
+    </sql>
+
+    <select id="selectLitemallCommentList" parameterType="LitemallComment" resultMap="LitemallCommentResult">
+        <include refid="selectLitemallCommentVo"/>
+        <where>
+            <if test="valueId != null "> and value_id = #{valueId}</if>
+            <if test="type != null "> and type = #{type}</if>
+            <if test="content != null  and content != ''"> and content = #{content}</if>
+            <if test="userId != null "> and user_id = #{userId}</if>
+            <if test="hasPicture != null "> and has_picture = #{hasPicture}</if>
+            <if test="picUrls != null  and picUrls != ''"> and pic_urls = #{picUrls}</if>
+            <if test="star != null "> and star = #{star}</if>
+            <if test="addTime != null "> and add_time = #{addTime}</if>
+            <if test="deleted != null "> and deleted = #{deleted}</if>
+        </where>
+    </select>
+
+    <select id="selectLitemallCommentById" parameterType="Long" resultMap="LitemallCommentResult">
+        <include refid="selectLitemallCommentVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertLitemallComment" parameterType="LitemallComment" useGeneratedKeys="true" keyProperty="id">
+        insert into litemall_comment
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="valueId != null ">value_id,</if>
+            <if test="type != null ">type,</if>
+            <if test="content != null  and content != ''">content,</if>
+            <if test="userId != null ">user_id,</if>
+            <if test="hasPicture != null ">has_picture,</if>
+            <if test="picUrls != null  and picUrls != ''">pic_urls,</if>
+            <if test="star != null ">star,</if>
+            <if test="addTime != null ">add_time,</if>
+            <if test="updateTime != null ">update_time,</if>
+            <if test="deleted != null ">deleted,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="valueId != null ">#{valueId},</if>
+            <if test="type != null ">#{type},</if>
+            <if test="content != null  and content != ''">#{content},</if>
+            <if test="userId != null ">#{userId},</if>
+            <if test="hasPicture != null ">#{hasPicture},</if>
+            <if test="picUrls != null  and picUrls != ''">#{picUrls},</if>
+            <if test="star != null ">#{star},</if>
+            <if test="addTime != null ">#{addTime},</if>
+            <if test="updateTime != null ">#{updateTime},</if>
+            <if test="deleted != null ">#{deleted},</if>
+         </trim>
+    </insert>
+
+    <update id="updateLitemallComment" parameterType="LitemallComment">
+        update litemall_comment
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="valueId != null ">value_id = #{valueId},</if>
+            <if test="type != null ">type = #{type},</if>
+            <if test="content != null  and content != ''">content = #{content},</if>
+            <if test="userId != null ">user_id = #{userId},</if>
+            <if test="hasPicture != null ">has_picture = #{hasPicture},</if>
+            <if test="picUrls != null  and picUrls != ''">pic_urls = #{picUrls},</if>
+            <if test="star != null ">star = #{star},</if>
+            <if test="addTime != null ">add_time = #{addTime},</if>
+            <if test="updateTime != null ">update_time = #{updateTime},</if>
+            <if test="deleted != null ">deleted = #{deleted},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteLitemallCommentById" parameterType="Long">
+        delete from litemall_comment where id = #{id}
+    </delete>
+
+    <delete id="deleteLitemallCommentByIds" parameterType="String">
+        delete from litemall_comment where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

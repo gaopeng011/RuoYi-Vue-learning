@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.project.shop.mapper.LitemallCouponMapper">
+
+    <resultMap type="LitemallCoupon" id="LitemallCouponResult">
+        <result property="id"    column="id"    />
+        <result property="name"    column="name"    />
+        <result property="desc"    column="desc1"    />
+        <result property="tag"    column="tag"    />
+        <result property="total"    column="total"    />
+        <result property="discount"    column="discount"    />
+        <result property="min"    column="min"    />
+        <result property="limit"    column="limit1"    />
+        <result property="type"    column="type"    />
+        <result property="status"    column="status"    />
+        <result property="goodsType"    column="goods_type"    />
+        <result property="goodsValue"    column="goods_value"    />
+        <result property="code"    column="code"    />
+        <result property="timeType"    column="time_type"    />
+        <result property="days"    column="days"    />
+        <result property="startTime"    column="start_time"    />
+        <result property="endTime"    column="end_time"    />
+        <result property="addTime"    column="add_time"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="deleted"    column="deleted"    />
+    </resultMap>
+
+    <sql id="selectLitemallCouponVo">
+        select id, name, desc1, tag, total, discount, min, limit1, type, status, goods_type, goods_value, code, time_type, days, start_time, end_time, add_time, update_time, deleted from litemall_coupon
+    </sql>
+
+    <select id="selectLitemallCouponList" parameterType="LitemallCoupon" resultMap="LitemallCouponResult">
+        <include refid="selectLitemallCouponVo"/>
+        <where>
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="desc != null  and desc != ''"> and desc1 = #{desc}</if>
+            <if test="tag != null  and tag != ''"> and tag = #{tag}</if>
+            <if test="total != null "> and total = #{total}</if>
+            <if test="discount != null "> and discount = #{discount}</if>
+            <if test="min != null "> and min = #{min}</if>
+            <if test="limit != null "> and limit1 = #{limit}</if>
+            <if test="type != null "> and type = #{type}</if>
+            <if test="status != null "> and status = #{status}</if>
+            <if test="goodsType != null "> and goods_type = #{goodsType}</if>
+            <if test="goodsValue != null  and goodsValue != ''"> and goods_value = #{goodsValue}</if>
+            <if test="code != null  and code != ''"> and code = #{code}</if>
+            <if test="timeType != null "> and time_type = #{timeType}</if>
+            <if test="days != null "> and days = #{days}</if>
+            <if test="startTime != null "> and start_time = #{startTime}</if>
+            <if test="endTime != null "> and end_time = #{endTime}</if>
+            <if test="addTime != null "> and add_time = #{addTime}</if>
+            <if test="deleted != null "> and deleted = #{deleted}</if>
+        </where>
+    </select>
+
+    <select id="selectLitemallCouponById" parameterType="Long" resultMap="LitemallCouponResult">
+        <include refid="selectLitemallCouponVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertLitemallCoupon" parameterType="LitemallCoupon" useGeneratedKeys="true" keyProperty="id">
+        insert into litemall_coupon
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="name != null  and name != ''">name,</if>
+            <if test="desc != null  and desc != ''">desc1,</if>
+            <if test="tag != null  and tag != ''">tag,</if>
+            <if test="total != null ">total,</if>
+            <if test="discount != null ">discount,</if>
+            <if test="min != null ">min,</if>
+            <if test="limit != null ">limit1,</if>
+            <if test="type != null ">type,</if>
+            <if test="status != null ">status,</if>
+            <if test="goodsType != null ">goods_type,</if>
+            <if test="goodsValue != null  and goodsValue != ''">goods_value,</if>
+            <if test="code != null  and code != ''">code,</if>
+            <if test="timeType != null ">time_type,</if>
+            <if test="days != null ">days,</if>
+            <if test="startTime != null ">start_time,</if>
+            <if test="endTime != null ">end_time,</if>
+            <if test="addTime != null ">add_time,</if>
+            <if test="updateTime != null ">update_time,</if>
+            <if test="deleted != null ">deleted,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="name != null  and name != ''">#{name},</if>
+            <if test="desc != null  and desc != ''">#{desc},</if>
+            <if test="tag != null  and tag != ''">#{tag},</if>
+            <if test="total != null ">#{total},</if>
+            <if test="discount != null ">#{discount},</if>
+            <if test="min != null ">#{min},</if>
+            <if test="limit != null ">#{limit},</if>
+            <if test="type != null ">#{type},</if>
+            <if test="status != null ">#{status},</if>
+            <if test="goodsType != null ">#{goodsType},</if>
+            <if test="goodsValue != null  and goodsValue != ''">#{goodsValue},</if>
+            <if test="code != null  and code != ''">#{code},</if>
+            <if test="timeType != null ">#{timeType},</if>
+            <if test="days != null ">#{days},</if>
+            <if test="startTime != null ">#{startTime},</if>
+            <if test="endTime != null ">#{endTime},</if>
+            <if test="addTime != null ">#{addTime},</if>
+            <if test="updateTime != null ">#{updateTime},</if>
+            <if test="deleted != null ">#{deleted},</if>
+         </trim>
+    </insert>
+
+    <update id="updateLitemallCoupon" parameterType="LitemallCoupon">
+        update litemall_coupon
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="name != null  and name != ''">name = #{name},</if>
+            <if test="desc != null  and desc != ''">desc1 = #{desc},</if>
+            <if test="tag != null  and tag != ''">tag = #{tag},</if>
+            <if test="total != null ">total = #{total},</if>
+            <if test="discount != null ">discount = #{discount},</if>
+            <if test="min != null ">min = #{min},</if>
+            <if test="limit != null ">limit1 = #{limit},</if>
+            <if test="type != null ">type = #{type},</if>
+            <if test="status != null ">status = #{status},</if>
+            <if test="goodsType != null ">goods_type = #{goodsType},</if>
+            <if test="goodsValue != null  and goodsValue != ''">goods_value = #{goodsValue},</if>
+            <if test="code != null  and code != ''">code = #{code},</if>
+            <if test="timeType != null ">time_type = #{timeType},</if>
+            <if test="days != null ">days = #{days},</if>
+            <if test="startTime != null ">start_time = #{startTime},</if>
+            <if test="endTime != null ">end_time = #{endTime},</if>
+            <if test="addTime != null ">add_time = #{addTime},</if>
+            <if test="updateTime != null ">update_time = #{updateTime},</if>
+            <if test="deleted != null ">deleted = #{deleted},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteLitemallCouponById" parameterType="Long">
+        delete from litemall_coupon where id = #{id}
+    </delete>
+
+    <delete id="deleteLitemallCouponByIds" parameterType="String">
+        delete from litemall_coupon where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

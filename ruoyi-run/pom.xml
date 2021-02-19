@@ -55,6 +55,12 @@
             <artifactId>ruoyi-monitor</artifactId>
         </dependency>
 
+        <!-- shop-->
+        <dependency>
+            <groupId>com.ruoyi</groupId>
+            <artifactId>ruoyi-shop</artifactId>
+        </dependency>
+
     </dependencies>
 
     <build>

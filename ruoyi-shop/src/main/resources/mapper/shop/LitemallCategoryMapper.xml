@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.project.shop.mapper.LitemallCategoryMapper">
+
+    <resultMap type="LitemallCategory" id="LitemallCategoryResult">
+        <result property="id"    column="id"    />
+        <result property="name"    column="name"    />
+        <result property="keywords"    column="keywords"    />
+        <result property="desc"    column="desc1"    />
+        <result property="parentId"    column="pid"    />
+        <result property="iconUrl"    column="icon_url"    />
+        <result property="picUrl"    column="pic_url"    />
+        <result property="level"    column="level"    />
+        <result property="sortOrder"    column="sort_order"    />
+        <result property="addTime"    column="add_time"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="deleted"    column="deleted"    />
+    </resultMap>
+
+    <sql id="selectLitemallCategoryVo">
+        select id, name, keywords, desc1, pid, icon_url, pic_url, level, sort_order, add_time, update_time, deleted from litemall_category
+    </sql>
+
+    <select id="selectLitemallCategoryList" parameterType="LitemallCategory" resultMap="LitemallCategoryResult">
+        <include refid="selectLitemallCategoryVo"/>
+        <where>
+            deleted = '0'
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="keywords != null  and keywords != ''"> and keywords = #{keywords}</if>
+            <if test="desc != null  and desc != ''"> and desc1 = #{desc}</if>
+            <if test="parentId != null "> and pid = #{parentId}</if>
+            <if test="iconUrl != null  and iconUrl != ''"> and icon_url = #{iconUrl}</if>
+            <if test="picUrl != null  and picUrl != ''"> and pic_url = #{picUrl}</if>
+            <if test="level != null  and level != ''"> and level = #{level}</if>
+            <if test="sortOrder != null "> and sort_order = #{sortOrder}</if>
+            <if test="addTime != null "> and add_time = #{addTime}</if>
+        </where>
+    </select>
+
+
+
+
+
+    <select id="selectLitemallCategoryById" parameterType="Long" resultMap="LitemallCategoryResult">
+        <include refid="selectLitemallCategoryVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertLitemallCategory" parameterType="LitemallCategory" useGeneratedKeys="true" keyProperty="id">
+        insert into litemall_category
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="name != null  and name != ''">name,</if>
+            <if test="keywords != null  and keywords != ''">keywords,</if>
+            <if test="desc != null  and desc != ''">desc1,</if>
+            <if test="parentId != null ">pid,</if>
+            <if test="iconUrl != null  and iconUrl != ''">icon_url,</if>
+            <if test="picUrl != null  and picUrl != ''">pic_url,</if>
+            <if test="level != null  and level != ''">level,</if>
+            <if test="sortOrder != null ">sort_order,</if>
+            <if test="addTime != null ">add_time,</if>
+            <if test="updateTime != null ">update_time,</if>
+            <if test="deleted != null ">deleted,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="name != null  and name != ''">#{name},</if>
+            <if test="keywords != null  and keywords != ''">#{keywords},</if>
+            <if test="desc != null  and desc != ''">#{desc},</if>
+            <if test="parentId != null ">#{pid},</if>
+            <if test="iconUrl != null  and iconUrl != ''">#{iconUrl},</if>
+            <if test="picUrl != null  and picUrl != ''">#{picUrl},</if>
+            <if test="level != null  and level != ''">#{level},</if>
+            <if test="sortOrder != null ">#{sortOrder},</if>
+            <if test="addTime != null ">#{addTime},</if>
+            <if test="updateTime != null ">#{updateTime},</if>
+            <if test="deleted != null ">#{deleted},</if>
+         </trim>
+    </insert>
+
+    <update id="updateLitemallCategory" parameterType="LitemallCategory">
+        update litemall_category
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="name != null  and name != ''">name = #{name},</if>
+            <if test="keywords != null  and keywords != ''">keywords = #{keywords},</if>
+            <if test="desc != null  and desc != ''">desc1 = #{desc},</if>
+            <if test="pid != null ">pid = #{pid},</if>
+            <if test="iconUrl != null  and iconUrl != ''">icon_url = #{iconUrl},</if>
+            <if test="picUrl != null  and picUrl != ''">pic_url = #{picUrl},</if>
+            <if test="level != null  and level != ''">level = #{level},</if>
+            <if test="sortOrder != null ">sort_order = #{sortOrder},</if>
+            <if test="addTime != null ">add_time = #{addTime},</if>
+            <if test="updateTime != null ">update_time = #{updateTime},</if>
+            <if test="deleted != null ">deleted = #{deleted},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteLitemallCategoryById" parameterType="Long">
+        update litemall_category  set deleted=1  where id = #{id}
+    </delete>
+
+    <delete id="deleteLitemallCategoryByIds" parameterType="String">
+        delete from litemall_category where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

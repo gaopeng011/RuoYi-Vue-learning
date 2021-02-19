@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.project.shop.mapper.LitemallStorageMapper">
+
+    <resultMap type="LitemallStorage" id="LitemallStorageResult">
+        <result property="id"    column="id"    />
+        <result property="key"    column="key1"    />
+        <result property="name"    column="name"    />
+        <result property="type"    column="type"    />
+        <result property="size"    column="size"    />
+        <result property="url"    column="url"    />
+        <result property="addTime"    column="add_time"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="deleted"    column="deleted"    />
+    </resultMap>
+
+    <sql id="selectLitemallStorageVo">
+        select id, key1, name, type, size, url, add_time, update_time, deleted from litemall_storage
+    </sql>
+
+    <select id="selectLitemallStorageList" parameterType="LitemallStorage" resultMap="LitemallStorageResult">
+        <include refid="selectLitemallStorageVo"/>
+        <where>
+            <if test="key != null  and key != ''"> and key1 = #{key}</if>
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="type != null  and type != ''"> and type = #{type}</if>
+            <if test="size != null "> and size = #{size}</if>
+            <if test="url != null  and url != ''"> and url = #{url}</if>
+            <if test="addTime != null "> and add_time = #{addTime}</if>
+            <if test="deleted != null "> and deleted = #{deleted}</if>
+        </where>
+    </select>
+
+    <select id="selectLitemallStorageById" parameterType="Long" resultMap="LitemallStorageResult">
+        <include refid="selectLitemallStorageVo"/>
+        where id = #{id}
+    </select>
+
+
+
+    <select id="selectLitemallStorageByKey" parameterType="LitemallStorage" resultMap="LitemallStorageResult">
+        <include refid="selectLitemallStorageVo"/>
+        where key1 = #{key}
+    </select>
+
+    <insert id="insertLitemallStorage" parameterType="LitemallStorage" useGeneratedKeys="true" keyProperty="id">
+        insert into litemall_storage
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="key != null  and key != ''">key1,</if>
+            <if test="name != null  and name != ''">name,</if>
+            <if test="type != null  and type != ''">type,</if>
+            <if test="size != null ">size,</if>
+            <if test="url != null  and url != ''">url,</if>
+            <if test="addTime != null ">add_time,</if>
+            <if test="updateTime != null ">update_time,</if>
+            <if test="deleted != null ">deleted,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="key != null  and key != ''">#{key},</if>
+            <if test="name != null  and name != ''">#{name},</if>
+            <if test="type != null  and type != ''">#{type},</if>
+            <if test="size != null ">#{size},</if>
+            <if test="url != null  and url != ''">#{url},</if>
+            <if test="addTime != null ">#{addTime},</if>
+            <if test="updateTime != null ">#{updateTime},</if>
+            <if test="deleted != null ">#{deleted},</if>
+         </trim>
+    </insert>
+
+    <update id="updateLitemallStorage" parameterType="LitemallStorage">
+        update litemall_storage
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="key != null  and key != ''">key1 = #{key},</if>
+            <if test="name != null  and name != ''">name = #{name},</if>
+            <if test="type != null  and type != ''">type = #{type},</if>
+            <if test="size != null ">size = #{size},</if>
+            <if test="url != null  and url != ''">url = #{url},</if>
+            <if test="addTime != null ">add_time = #{addTime},</if>
+            <if test="updateTime != null ">update_time = #{updateTime},</if>
+            <if test="deleted != null ">deleted = #{deleted},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteLitemallStorageById" parameterType="Long">
+        delete from litemall_storage where id = #{id}
+    </delete>
+
+    <delete id="deleteLitemallStorageByIds" parameterType="String">
+        delete from litemall_storage where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

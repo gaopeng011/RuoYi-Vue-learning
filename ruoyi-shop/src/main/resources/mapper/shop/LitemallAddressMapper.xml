@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.project.shop.mapper.LitemallAddressMapper">
+
+    <resultMap type="LitemallAddress" id="LitemallAddressResult">
+        <result property="id"    column="id"    />
+        <result property="name"    column="name"    />
+        <result property="userId"    column="user_id"    />
+        <result property="province"    column="province"    />
+        <result property="city"    column="city"    />
+        <result property="county"    column="county"    />
+        <result property="provinceName"    column="provinceName"    />
+        <result property="cityName"    column="cityName"    />
+        <result property="countyName"    column="countyName"    />
+        <result property="addressDetail"    column="address_detail"    />
+        <result property="areaCode"    column="area_code"    />
+        <result property="postalCode"    column="postal_code"    />
+        <result property="tel"    column="tel"    />
+        <result property="isDefault"    column="is_default"    />
+        <result property="addTime"    column="add_time"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="deleted"    column="deleted"    />
+    </resultMap>
+
+    <sql id="selectLitemallAddressVo">
+        SELECT a.id, a.name, a.user_id, a.province, a.city, a.county,b.`name` AS provinceName ,c.`name` AS cityName,d.`name` AS countyName , a.address_detail, a.area_code, a.postal_code, a.tel, a.is_default, a.add_time, a.update_time, a.deleted
+        FROM litemall_address a
+        LEFT JOIN `litemall_region` b ON a.`province`=b.`id`
+        LEFT JOIN `litemall_region` c ON a.`city`=c.`id`
+        LEFT JOIN `litemall_region` d ON a.`county`=d.`id`
+    </sql>
+
+    <select id="selectLitemallAddressList" parameterType="LitemallAddress" resultMap="LitemallAddressResult">
+        <include refid="selectLitemallAddressVo"/>
+        <where>
+            <if test="name != null  and name != ''"> and a.name like concat('%', #{name}, '%')</if>
+            <if test="userId != null "> and a.user_id = #{userId}</if>
+            <if test="province != null  and province != ''"> and a.province = #{province}</if>
+            <if test="city != null  and city != ''"> and a.city = #{city}</if>
+            <if test="county != null  and county != ''"> and a.county = #{county}</if>
+            <if test="addressDetail != null  and addressDetail != ''"> and a.address_detail = #{addressDetail}</if>
+            <if test="areaCode != null  and areaCode != ''"> and a.area_code = #{areaCode}</if>
+            <if test="postalCode != null  and postalCode != ''"> and a.postal_code = #{postalCode}</if>
+            <if test="tel != null  and tel != ''"> and a.tel = #{tel}</if>
+            <if test="isDefault != null "> and a.is_default = #{isDefault}</if>
+            <if test="addTime != null "> and a.add_time = #{addTime}</if>
+            <if test="deleted != null "> and a.deleted = #{deleted}</if>
+        </where>
+    </select>
+
+    <select id="selectLitemallAddressById" parameterType="Long" resultMap="LitemallAddressResult">
+        SELECT a.id, a.name, a.user_id, a.province, a.city, a.county,b.`name` AS provinceName ,c.`name` AS cityName,d.`name` AS countyName , a.address_detail, a.area_code, a.postal_code, a.tel, a.is_default, a.add_time, a.update_time, a.deleted
+        FROM litemall_address a
+        LEFT JOIN `litemall_region` b ON a.`province`=b.`id`
+        LEFT JOIN `litemall_region` c ON a.`city`=c.`id`
+        LEFT JOIN `litemall_region` d ON a.`county`=d.`id`
+        where a.id = #{id}
+    </select>
+
+    <insert id="insertLitemallAddress" parameterType="LitemallAddress" useGeneratedKeys="true" keyProperty="id">
+        insert into litemall_address
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="name != null  and name != ''">name,</if>
+            <if test="userId != null ">user_id,</if>
+            <if test="province != null  and province != ''">province,</if>
+            <if test="city != null  and city != ''">city,</if>
+            <if test="county != null  and county != ''">county,</if>
+            <if test="addressDetail != null  and addressDetail != ''">address_detail,</if>
+            <if test="areaCode != null  and areaCode != ''">area_code,</if>
+            <if test="postalCode != null  and postalCode != ''">postal_code,</if>
+            <if test="tel != null  and tel != ''">tel,</if>
+            <if test="isDefault != null ">is_default,</if>
+            <if test="addTime != null ">add_time,</if>
+            <if test="updateTime != null ">update_time,</if>
+            <if test="deleted != null ">deleted,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="name != null  and name != ''">#{name},</if>
+            <if test="userId != null ">#{userId},</if>
+            <if test="province != null  and province != ''">#{province},</if>
+            <if test="city != null  and city != ''">#{city},</if>
+            <if test="county != null  and county != ''">#{county},</if>
+            <if test="addressDetail != null  and addressDetail != ''">#{addressDetail},</if>
+            <if test="areaCode != null  and areaCode != ''">#{areaCode},</if>
+            <if test="postalCode != null  and postalCode != ''">#{postalCode},</if>
+            <if test="tel != null  and tel != ''">#{tel},</if>
+            <if test="isDefault != null ">#{isDefault},</if>
+            <if test="addTime != null ">#{addTime},</if>
+            <if test="updateTime != null ">#{updateTime},</if>
+            <if test="deleted != null ">#{deleted},</if>
+         </trim>
+    </insert>
+
+    <update id="updateLitemallAddress" parameterType="LitemallAddress">
+        update litemall_address
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="name != null  and name != ''">name = #{name},</if>
+            <if test="userId != null ">user_id = #{userId},</if>
+            <if test="province != null  and province != ''">province = #{province},</if>
+            <if test="city != null  and city != ''">city = #{city},</if>
+            <if test="county != null  and county != ''">county = #{county},</if>
+            <if test="addressDetail != null  and addressDetail != ''">address_detail = #{addressDetail},</if>
+            <if test="areaCode != null  and areaCode != ''">area_code = #{areaCode},</if>
+            <if test="postalCode != null  and postalCode != ''">postal_code = #{postalCode},</if>
+            <if test="tel != null  and tel != ''">tel = #{tel},</if>
+            <if test="isDefault != null ">is_default = #{isDefault},</if>
+            <if test="addTime != null ">add_time = #{addTime},</if>
+            <if test="updateTime != null ">update_time = #{updateTime},</if>
+            <if test="deleted != null ">deleted = #{deleted},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteLitemallAddressById" parameterType="Long">
+        delete from litemall_address where id = #{id}
+    </delete>
+
+    <delete id="deleteLitemallAddressByIds" parameterType="String">
+        delete from litemall_address where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

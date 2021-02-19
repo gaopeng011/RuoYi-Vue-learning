@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.project.shop.mapper.LitemallRegionMapper">
+
+    <resultMap type="LitemallRegion" id="LitemallRegionResult">
+        <result property="id"    column="id"    />
+        <result property="pid"    column="pid"    />
+        <result property="parentId"    column="pid"    />
+        <result property="name"    column="name"    />
+        <result property="type"    column="type"    />
+        <result property="code"    column="code"    />
+    </resultMap>
+
+    <sql id="selectLitemallRegionVo">
+        select id, pid, name, type, code from litemall_region
+    </sql>
+
+    <select id="selectLitemallRegionList" parameterType="LitemallRegion" resultMap="LitemallRegionResult">
+        <include refid="selectLitemallRegionVo"/>
+        <where>
+            <if test="id != null "> and id = #{id}</if>
+            <if test="pid != null "> and pid = #{pid}</if>
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="type != null "> and type = #{type}</if>
+            <if test="code != null "> and code = #{code}</if>
+        </where>
+    </select>
+
+    <select id="selectLitemallRegionById" parameterType="Long" resultMap="LitemallRegionResult">
+        <include refid="selectLitemallRegionVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertLitemallRegion" parameterType="LitemallRegion" useGeneratedKeys="true" keyProperty="id">
+        insert into litemall_region
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="pid != null ">pid,</if>
+            <if test="name != null  and name != ''">name,</if>
+            <if test="type != null ">type,</if>
+            <if test="code != null ">code,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="pid != null ">#{pid},</if>
+            <if test="name != null  and name != ''">#{name},</if>
+            <if test="type != null ">#{type},</if>
+            <if test="code != null ">#{code},</if>
+         </trim>
+    </insert>
+
+    <update id="updateLitemallRegion" parameterType="LitemallRegion">
+        update litemall_region
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="pid != null ">pid = #{pid},</if>
+            <if test="name != null  and name != ''">name = #{name},</if>
+            <if test="type != null ">type = #{type},</if>
+            <if test="code != null ">code = #{code},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteLitemallRegionById" parameterType="Long">
+        delete from litemall_region where id = #{id}
+    </delete>
+
+    <delete id="deleteLitemallRegionByIds" parameterType="String">
+        delete from litemall_region where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

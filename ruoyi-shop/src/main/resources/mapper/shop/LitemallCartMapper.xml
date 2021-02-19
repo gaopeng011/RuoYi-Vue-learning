@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.project.shop.mapper.LitemallCartMapper">
+
+    <resultMap type="LitemallCart" id="LitemallCartResult">
+        <result property="id"    column="id"    />
+        <result property="userId"    column="user_id"    />
+        <result property="goodsId"    column="goods_id"    />
+        <result property="goodsSn"    column="goods_sn"    />
+        <result property="goodsName"    column="goods_name"    />
+        <result property="productId"    column="product_id"    />
+        <result property="price"    column="price"    />
+        <result property="number"    column="number"    />
+        <result property="specifications"    column="specifications"    />
+        <result property="checked"    column="checked"    />
+        <result property="picUrl"    column="pic_url"    />
+        <result property="addTime"    column="add_time"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="deleted"    column="deleted"    />
+    </resultMap>
+
+    <sql id="selectLitemallCartVo">
+        select id, user_id, goods_id, goods_sn, goods_name, product_id, price, number, specifications, checked, pic_url, add_time, update_time, deleted from litemall_cart
+    </sql>
+
+    <select id="selectLitemallCartList" parameterType="LitemallCart" resultMap="LitemallCartResult">
+        <include refid="selectLitemallCartVo"/>
+        <where>
+            <if test="userId != null "> and user_id = #{userId}</if>
+            <if test="goodsId != null "> and goods_id = #{goodsId}</if>
+            <if test="goodsSn != null  and goodsSn != ''"> and goods_sn = #{goodsSn}</if>
+            <if test="goodsName != null  and goodsName != ''"> and goods_name like concat('%', #{goodsName}, '%')</if>
+            <if test="productId != null "> and product_id = #{productId}</if>
+            <if test="price != null "> and price = #{price}</if>
+            <if test="number != null "> and number = #{number}</if>
+            <if test="specifications != null  and specifications != ''"> and specifications = #{specifications}</if>
+            <if test="checked != null "> and checked = #{checked}</if>
+            <if test="picUrl != null  and picUrl != ''"> and pic_url = #{picUrl}</if>
+            <if test="addTime != null "> and add_time = #{addTime}</if>
+            <if test="deleted != null "> and deleted = #{deleted}</if>
+        </where>
+    </select>
+
+    <select id="selectLitemallCartById" parameterType="Long" resultMap="LitemallCartResult">
+        <include refid="selectLitemallCartVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertLitemallCart" parameterType="LitemallCart" useGeneratedKeys="true" keyProperty="id">
+        insert into litemall_cart
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="userId != null ">user_id,</if>
+            <if test="goodsId != null ">goods_id,</if>
+            <if test="goodsSn != null  and goodsSn != ''">goods_sn,</if>
+            <if test="goodsName != null  and goodsName != ''">goods_name,</if>
+            <if test="productId != null ">product_id,</if>
+            <if test="price != null ">price,</if>
+            <if test="number != null ">number,</if>
+            <if test="specifications != null  and specifications != ''">specifications,</if>
+            <if test="checked != null ">checked,</if>
+            <if test="picUrl != null  and picUrl != ''">pic_url,</if>
+            <if test="addTime != null ">add_time,</if>
+            <if test="updateTime != null ">update_time,</if>
+            <if test="deleted != null ">deleted,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="userId != null ">#{userId},</if>
+            <if test="goodsId != null ">#{goodsId},</if>
+            <if test="goodsSn != null  and goodsSn != ''">#{goodsSn},</if>
+            <if test="goodsName != null  and goodsName != ''">#{goodsName},</if>
+            <if test="productId != null ">#{productId},</if>
+            <if test="price != null ">#{price},</if>
+            <if test="number != null ">#{number},</if>
+            <if test="specifications != null  and specifications != ''">#{specifications},</if>
+            <if test="checked != null ">#{checked},</if>
+            <if test="picUrl != null  and picUrl != ''">#{picUrl},</if>
+            <if test="addTime != null ">#{addTime},</if>
+            <if test="updateTime != null ">#{updateTime},</if>
+            <if test="deleted != null ">#{deleted},</if>
+         </trim>
+    </insert>
+
+    <update id="updateLitemallCart" parameterType="LitemallCart">
+        update litemall_cart
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="userId != null ">user_id = #{userId},</if>
+            <if test="goodsId != null ">goods_id = #{goodsId},</if>
+            <if test="goodsSn != null  and goodsSn != ''">goods_sn = #{goodsSn},</if>
+            <if test="goodsName != null  and goodsName != ''">goods_name = #{goodsName},</if>
+            <if test="productId != null ">product_id = #{productId},</if>
+            <if test="price != null ">price = #{price},</if>
+            <if test="number != null ">number = #{number},</if>
+            <if test="specifications != null  and specifications != ''">specifications = #{specifications},</if>
+            <if test="checked != null ">checked = #{checked},</if>
+            <if test="picUrl != null  and picUrl != ''">pic_url = #{picUrl},</if>
+            <if test="addTime != null ">add_time = #{addTime},</if>
+            <if test="updateTime != null ">update_time = #{updateTime},</if>
+            <if test="deleted != null ">deleted = #{deleted},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+
+    <update id="updateLitemallCartByProductId" parameterType="LitemallCart">
+        update litemall_cart
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="userId != null ">user_id = #{userId},</if>
+            <if test="goodsId != null ">goods_id = #{goodsId},</if>
+            <if test="goodsSn != null  and goodsSn != ''">goods_sn = #{goodsSn},</if>
+            <if test="goodsName != null  and goodsName != ''">goods_name = #{goodsName},</if>
+            <if test="price != null ">price = #{price},</if>
+            <if test="number != null ">number = #{number},</if>
+            <if test="specifications != null  and specifications != ''">specifications = #{specifications},</if>
+            <if test="checked != null ">checked = #{checked},</if>
+            <if test="picUrl != null  and picUrl != ''">pic_url = #{picUrl},</if>
+            <if test="addTime != null ">add_time = #{addTime},</if>
+            <if test="updateTime != null ">update_time = #{updateTime},</if>
+            <if test="deleted != null ">deleted = #{deleted},</if>
+        </trim>
+        where product_id = #{productId}
+    </update>
+
+    <delete id="deleteLitemallCartById" parameterType="Long">
+        delete from litemall_cart where id = #{id}
+    </delete>
+
+    <delete id="deleteLitemallCartByIds" parameterType="String">
+        delete from litemall_cart where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

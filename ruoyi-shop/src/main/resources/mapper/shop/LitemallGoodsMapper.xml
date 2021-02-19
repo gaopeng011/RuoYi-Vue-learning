@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.project.shop.mapper.LitemallGoodsMapper">
+
+    <resultMap type="LitemallGoods" id="LitemallGoodsResult">
+        <result property="id"    column="id"    />
+        <result property="goodsSn"    column="goods_sn"    />
+        <result property="name"    column="name"    />
+        <result property="categoryId"    column="category_id"    />
+        <result property="brandId"    column="brand_id"    />
+        <result property="gallery"    column="gallery"   typeHandler="com.ruoyi.common.mybatis.JsonStringArrayTypeHandler" />
+        <result property="keywords"    column="keywords"    />
+        <result property="brief"    column="brief"    />
+        <result property="isOnSale"    column="is_on_sale"    />
+        <result property="sortOrder"    column="sort_order"    />
+        <result property="picUrl"    column="pic_url"    />
+        <result property="shareUrl"    column="share_url"    />
+        <result property="isNew"    column="is_new"    />
+        <result property="isHot"    column="is_hot"    />
+        <result property="unit"    column="unit"    />
+        <result property="counterPrice"    column="counter_price"    />
+        <result property="retailPrice"    column="retail_price"    />
+        <result property="detail"    column="detail"    />
+        <result property="addTime"    column="add_time"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="deleted"    column="deleted"    />
+    </resultMap>
+
+    <sql id="selectLitemallGoodsVo">
+        select id, goods_sn, name, category_id, brand_id, gallery, keywords, brief, is_on_sale, sort_order, pic_url, share_url, is_new, is_hot, unit, counter_price, retail_price, detail, add_time, update_time, deleted from litemall_goods
+    </sql>
+
+    <select id="selectLitemallGoodsList" parameterType="LitemallGoods" resultMap="LitemallGoodsResult">
+        <include refid="selectLitemallGoodsVo"/>
+        <where>
+            <if test="goodsSn != null  and goodsSn != ''"> and goods_sn = #{goodsSn}</if>
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="categoryId != null "> and category_id = #{categoryId}</if>
+            <if test="brandId != null "> and brand_id = #{brandId}</if>
+            <if test="gallery != null "> and gallery = #{gallery}</if>
+            <if test="keywords != null  and keywords != ''"> and keywords = #{keywords}</if>
+            <if test="brief != null  and brief != ''"> and brief = #{brief}</if>
+            <if test="isOnSale != null "> and is_on_sale = #{isOnSale}</if>
+            <if test="sortOrder != null "> and sort_order = #{sortOrder}</if>
+            <if test="picUrl != null  and picUrl != ''"> and pic_url = #{picUrl}</if>
+            <if test="shareUrl != null  and shareUrl != ''"> and share_url = #{shareUrl}</if>
+            <if test="isNew != null "> and is_new = #{isNew}</if>
+            <if test="isHot != null "> and is_hot = #{isHot}</if>
+            <if test="unit != null  and unit != ''"> and unit = #{unit}</if>
+            <if test="counterPrice != null "> and counter_price = #{counterPrice}</if>
+            <if test="retailPrice != null "> and retail_price = #{retailPrice}</if>
+            <if test="detail != null  and detail != ''"> and detail = #{detail}</if>
+            <if test="addTime != null "> and add_time = #{addTime}</if>
+            <if test="deleted != null "> and deleted = #{deleted}</if>
+        </where>
+    </select>
+
+    <select id="selectLitemallGoodsById" parameterType="Long" resultMap="LitemallGoodsResult">
+        <include refid="selectLitemallGoodsVo"/>
+        where id = #{id}
+    </select>
+
+
+    <select id="selectLitemallGoodsByIds" parameterType="String" resultMap="LitemallGoodsResult">
+        <include refid="selectLitemallGoodsVo"/>
+         where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </select>
+
+    <select id="checkExistGoodsByName" parameterType="LitemallGoods" resultType="java.lang.Long">
+
+        select count(*) from litemall_goods   where name = #{name}  and deleted=0 and is_on_sale=1
+    </select>
+
+    <insert id="insertLitemallGoods" parameterType="LitemallGoods" useGeneratedKeys="true" keyProperty="id">
+        insert into litemall_goods
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="goodsSn != null  and goodsSn != ''">goods_sn,</if>
+            <if test="name != null  and name != ''">name,</if>
+            <if test="categoryId != null ">category_id,</if>
+            <if test="brandId != null ">brand_id,</if>
+            <if test="gallery != null">gallery,</if>
+            <if test="keywords != null  and keywords != ''">keywords,</if>
+            <if test="brief != null  and brief != ''">brief,</if>
+            <if test="isOnSale != null ">is_on_sale,</if>
+            <if test="sortOrder != null ">sort_order,</if>
+            <if test="picUrl != null  and picUrl != ''">pic_url,</if>
+            <if test="shareUrl != null  and shareUrl != ''">share_url,</if>
+            <if test="isNew != null ">is_new,</if>
+            <if test="isHot != null ">is_hot,</if>
+            <if test="unit != null  and unit != ''">unit,</if>
+            <if test="counterPrice != null ">counter_price,</if>
+            <if test="retailPrice != null ">retail_price,</if>
+            <if test="detail != null  and detail != ''">detail,</if>
+            <if test="addTime != null ">add_time,</if>
+            <if test="updateTime != null ">update_time,</if>
+            <if test="deleted != null ">deleted,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="goodsSn != null  and goodsSn != ''">#{goodsSn},</if>
+            <if test="name != null  and name != ''">#{name},</if>
+            <if test="categoryId != null ">#{categoryId},</if>
+            <if test="brandId != null ">#{brandId},</if>
+            <if test="gallery != null">#{gallery,jdbcType=VARCHAR,typeHandler=com.ruoyi.common.mybatis.JsonStringArrayTypeHandler},</if>
+            <if test="keywords != null  and keywords != ''">#{keywords},</if>
+            <if test="brief != null  and brief != ''">#{brief},</if>
+            <if test="isOnSale != null ">#{isOnSale},</if>
+            <if test="sortOrder != null ">#{sortOrder},</if>
+            <if test="picUrl != null  and picUrl != ''">#{picUrl},</if>
+            <if test="shareUrl != null  and shareUrl != ''">#{shareUrl},</if>
+            <if test="isNew != null ">#{isNew},</if>
+            <if test="isHot != null ">#{isHot},</if>
+            <if test="unit != null  and unit != ''">#{unit},</if>
+            <if test="counterPrice != null ">#{counterPrice},</if>
+            <if test="retailPrice != null ">#{retailPrice},</if>
+            <if test="detail != null  and detail != ''">#{detail},</if>
+            <if test="addTime != null ">#{addTime},</if>
+            <if test="updateTime != null ">#{updateTime},</if>
+            <if test="deleted != null ">#{deleted},</if>
+         </trim>
+    </insert>
+
+    <update id="updateLitemallGoods" parameterType="LitemallGoods">
+        update litemall_goods
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="goodsSn != null  and goodsSn != ''">goods_sn = #{goodsSn},</if>
+            <if test="name != null  and name != ''">name = #{name},</if>
+            <if test="categoryId != null ">category_id = #{categoryId},</if>
+            <if test="brandId != null ">brand_id = #{brandId},</if>
+            <if test="gallery != null">gallery = #{gallery,jdbcType=VARCHAR,typeHandler=com.ruoyi.common.mybatis.JsonStringArrayTypeHandler},</if>
+            <if test="keywords != null  and keywords != ''">keywords = #{keywords},</if>
+            <if test="brief != null  and brief != ''">brief = #{brief},</if>
+            <if test="isOnSale != null ">is_on_sale = #{isOnSale},</if>
+            <if test="sortOrder != null ">sort_order = #{sortOrder},</if>
+            <if test="picUrl != null  and picUrl != ''">pic_url = #{picUrl},</if>
+            <if test="shareUrl != null  and shareUrl != ''">share_url = #{shareUrl},</if>
+            <if test="isNew != null ">is_new = #{isNew},</if>
+            <if test="isHot != null ">is_hot = #{isHot},</if>
+            <if test="unit != null  and unit != ''">unit = #{unit},</if>
+            <if test="counterPrice != null ">counter_price = #{counterPrice},</if>
+            <if test="retailPrice != null ">retail_price = #{retailPrice},</if>
+            <if test="detail != null  and detail != ''">detail = #{detail},</if>
+            <if test="addTime != null ">add_time = #{addTime},</if>
+            <if test="updateTime != null ">update_time = #{updateTime},</if>
+            <if test="deleted != null ">deleted = #{deleted},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteLitemallGoodsById" parameterType="Long">
+        delete from litemall_goods where id = #{id}
+    </delete>
+
+    <delete id="deleteLitemallGoodsByIds" parameterType="String">
+        delete from litemall_goods where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>
